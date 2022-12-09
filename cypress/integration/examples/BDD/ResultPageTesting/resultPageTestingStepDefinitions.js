@@ -1,0 +1,157 @@
+import { Given, When, And, Then } from "cypress-cucumber-preprocessor/steps";
+import { faker } from "@faker-js/faker";
+import HomePagePowerUs from "../../../../support/pageObjects/HomePagePowerUs";
+import DetailsPage from "../../../../support/pageObjects/DetailsPage";
+import ResultsPage from "../../../../support/pageObjects/ResultsPage";
+
+const homePage = new HomePagePowerUs();
+const resultPage = new ResultsPage();
+const detailsPage = new DetailsPage();
+const randomFirstName = faker.name.firstName();
+const randomLastName = faker.name.lastName();
+var randomEmailAddress = faker.internet.email();
+const randomPhoneNumber = faker.phone.number("50345####");
+const randomPassword = faker.internet.password(10);
+var avgSalary;
+
+Given("user is on the phone number page", function () {
+  cy.visit(Cypress.env("baseURL"));
+  //cy.wait(10000);
+  cy.wait(5000);
+  homePage.getCookies().click();
+  homePage.getMenuIcon().click();
+  homePage.getBlogMenu().click();
+  homePage.getElectricianJobType().click();
+  homePage.getKostenlosGehaltButton().click();
+  detailsPage.selectDegree(String(this.data.degree));
+  detailsPage.selectExperience(String(this.data.experience));
+  detailsPage.selectMobility(String(this.data.mobility));
+  detailsPage.selectState(String(this.data.state));
+  detailsPage.getKostenlosDeinGehaltButton().click();
+  detailsPage.fillOutRegistrationForm(
+    randomFirstName,
+    randomLastName,
+    randomEmailAddress,
+    randomPassword
+  );
+});
+
+Then("an invalid phone number error message is displayed", () => {
+  detailsPage.assertInvalidPhoneNumber();
+});
+
+Then("user should not proceed to the next page", () => {
+  cy.url().should("include", "phone-number");
+});
+
+When("user clicks on the Kostenlos registrieren button", () => {
+  //cy.wait(2000);
+  detailsPage.getKostenlosRegistrierenButton().click({ force: true });
+  //cy.wait(2000);
+});
+
+Then("an already registered phone number error message is displayed", () => {
+  detailsPage.assertAlreadyRegisteredPhoneNumber();
+});
+
+When(/^user enters invalid phone number "([^"]*)"$/, function (phoneNumber) {
+  var invalidPhoneNumber = phoneNumber + "";
+  detailsPage.getPhoneNumberInput(invalidPhoneNumber);
+});
+
+When(
+  /^user enters a phone_number that is already registered before "([^"]*)"$/,
+  function (phoneNumber) {
+    var invalidPhoneNumber = phoneNumber + "";
+    detailsPage.getPhoneNumberInput(invalidPhoneNumber);
+  }
+);
+
+Given("user is on the result page", function () {
+  cy.visit(Cypress.env("baseURL"));
+  cy.wait(5000);
+  homePage.getCookies().click();
+  homePage.getMenuIcon().click();
+  homePage.getBlogMenu().click();
+  homePage.getElectricianJobType().click();
+  homePage.getKostenlosGehaltButton().click();
+  detailsPage.selectDegree(String(this.data.degree));
+  detailsPage.selectExperience(String(this.data.experience));
+  detailsPage.selectMobility(String(this.data.mobility));
+  detailsPage.selectState(String(this.data.state));
+  detailsPage.getKostenlosDeinGehaltButton().click();
+  detailsPage.fillOutRegistrationForm(
+    randomFirstName,
+    randomLastName,
+    randomEmailAddress,
+    randomPassword
+  );
+  detailsPage.getPhoneNumberInput(randomPhoneNumber);
+  detailsPage.getKostenlosRegistrierenButton().click();
+});
+
+Then("the average salary is displayed", () => {
+  avgSalary = resultPage.getAverageSalary().should("be.visible");
+});
+
+When("user clicks on the filter button", () => {
+  resultPage.getFilter().click({ force: true });
+});
+
+Then("the degree is displayed and matches with the selected one", function () {
+  const actualText = resultPage.getDegreeText(String(this.data.degree));
+  resultPage.getDegreeOnFilter().should("have.text", actualText);
+});
+
+And(
+  "the experience is displayed and matches with the selected one",
+  function () {
+    resultPage
+      .getExperienceOnFilter()
+      .should("have.text", String(this.data.experience));
+  }
+);
+
+And("the mobility is displayed and matches with the selected one", function () {
+  const actualText = resultPage.getMobilityText(String(this.data.mobility));
+  resultPage.getMobilityOnFilter().should("have.text", actualText);
+});
+
+And("the state is displayed and matches with the selected one", function () {
+  resultPage.getCityOnFilter().should("have.text", String(this.data.state));
+});
+
+When("user changes the years of experience", function () {
+  const newExperience = this.data.newExperience;
+  resultPage.reSelectExperience(String(newExperience));
+});
+
+And("user changes the state", function () {
+  const newState = this.data.newState;
+  resultPage.reSelectState(String(newState));
+});
+
+And("clicks on the Kostenlos Dein Gehalt sehen button", function () {
+  resultPage.getKostenlosDeinGehaltSehen().click();
+});
+
+Then("the average salary amount is changed", function () {
+  expect(avgSalary).not.to.equal(resultPage.getAverageSalary());
+});
+
+And("the new selected state is displayed", function () {
+  const newState = "Bundesland " + this.data.newState + "*";
+  resultPage.getDisplayedState().should("have.text", newState);
+});
+
+Then("the years of experience is updated", function () {
+  resultPage
+    .getRenewedExperienceOnFilter()
+    .should("have.text", String(this.data.newExperience));
+});
+
+And("the state is updated", function () {
+  resultPage
+    .getRenewedCityOnFilter()
+    .should("have.text", String(this.data.newState));
+});

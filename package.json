@@ -1,0 +1,24 @@
+{
+  "name": "powerus_e2e",
+  "version": "1.0.0",
+  "description": "PowerUs e2e testing with Cypress",
+  "main": "index.js",
+  "scripts": {
+    "test": "node_modules\\.bin\\cypress run",
+    "headTest": "npm run test -- --headed",
+    "dashboardTest": "npm run test -- --record --browser chrome --key b05697f5-3e76-42ae-9ba4-d7d96f66a32e",
+    "chromeTest": "npm run test -- --browser chrome"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  },
+  "author": "ekremaltan",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "cypress": "^12.0.1",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-cucumber-tagging": "^1.0.3",
+    "cypress-iframe": "^1.0.1"
+  }
+}
