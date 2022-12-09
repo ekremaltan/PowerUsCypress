@@ -1,2 +1,7 @@
 # Project exclude paths
 /node_modules/
+cypress/download
+cypress/screenshots
+cypress/videos
+node_modules
+.idea
