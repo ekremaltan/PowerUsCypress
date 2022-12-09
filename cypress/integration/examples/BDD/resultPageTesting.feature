@@ -50,5 +50,5 @@ Feature: Blog E2E Testing
         Then the average salary amount is changed
         And the new selected state is displayed
         When user clicks on the filter button
-        Then the years of experience is updated
-        And the state is updated
+        Then the years of experience is updated on the filter section
+        And the state is updated on the filter section

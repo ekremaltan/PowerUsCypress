@@ -144,13 +144,13 @@ And("the new selected state is displayed", function () {
   resultPage.getDisplayedState().should("have.text", newState);
 });
 
-Then("the years of experience is updated", function () {
+Then("the years of experience is updated on the filter section", function () {
   resultPage
     .getRenewedExperienceOnFilter()
     .should("have.text", String(this.data.newExperience));
 });
 
-And("the state is updated", function () {
+And("the state is updated on the filter section", function () {
   resultPage
     .getRenewedCityOnFilter()
     .should("have.text", String(this.data.newState));
