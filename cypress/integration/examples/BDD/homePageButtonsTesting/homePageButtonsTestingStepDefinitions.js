@@ -8,7 +8,6 @@ const detailsPage = new DetailsPage();
 
 Given("user is on the Home page", () => {
   cy.visit(Cypress.env("baseURL"));
-  //cy.wait(10000);
   cy.wait(5000);
   homePage.getCookies().click();
 });
@@ -101,7 +100,6 @@ And("the Kostenlos Dein Gehalt sehen button is displayed", () => {
 
 Given("user is on the state step page", function () {
   cy.visit(Cypress.env("baseURL"));
-  //cy.wait(10000);
   cy.wait(5000);
   homePage.getCookies().click();
   homePage.getMenuIcon().click();

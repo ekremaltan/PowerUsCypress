@@ -16,7 +16,6 @@ var avgSalary;
 
 Given("user is on the phone number page", function () {
   cy.visit(Cypress.env("baseURL"));
-  //cy.wait(10000);
   cy.wait(5000);
   homePage.getCookies().click();
   homePage.getMenuIcon().click();
@@ -45,9 +44,7 @@ Then("user should not proceed to the next page", () => {
 });
 
 When("user clicks on the Kostenlos registrieren button", () => {
-  //cy.wait(2000);
   detailsPage.getKostenlosRegistrierenButton().click({ force: true });
-  //cy.wait(2000);
 });
 
 Then("an already registered phone number error message is displayed", () => {

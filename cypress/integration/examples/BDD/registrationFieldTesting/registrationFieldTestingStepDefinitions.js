@@ -15,7 +15,6 @@ const randomPassword = faker.internet.password(10);
 
 Given("user is on the registration page", function () {
   cy.visit(Cypress.env("baseURL"));
-  //cy.wait(10000);
   cy.wait(5000);
   homePage.getCookies().click();
   homePage.getMenuIcon().click();
@@ -107,7 +106,6 @@ Then("user should proceed to the phone number page", () => {
 
 Given("user is on the phone number page", function () {
   cy.visit(Cypress.env("baseURL"));
-  //cy.wait(10000);
   cy.wait(5000);
   homePage.getCookies().click();
   homePage.getMenuIcon().click();
@@ -136,9 +134,7 @@ Then("user cannot change Germany Country code", () => {
 });
 
 When("user clicks on the Kostenlos registrieren button", () => {
-  // cy.wait(2000);
   detailsPage.getKostenlosRegistrierenButton().click({ force: true });
-  //cy.wait(2000);
 });
 
 Then("the Ergebnis header is displayed", () => {
