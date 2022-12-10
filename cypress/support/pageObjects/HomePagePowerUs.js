@@ -31,6 +31,10 @@ class HomePagePowerUs {
     return cy.get("h1[class='title']");
   }
 
+  getElektrikerGehaltLink() {
+    return cy.get("a[routerlink='/elektriker-gehalt-übersicht']");
+  }
+
   // Under blog menu, checks each job type buttons are displayed and clickable or not
   assertJobTypes() {
     cy.get(
@@ -46,6 +50,25 @@ class HomePagePowerUs {
       cy.wrap($el).should("be.visible");
       cy.wrap($el).should("not.be.disabled");
     });
+  }
+
+  // Asserts all the links at the bottom of the page whether each link is displayed and clickable
+  assertLinksAtTheBottom() {
+    cy.get(".links .link").each(($el) => {
+      cy.wrap($el).should("be.visible");
+      cy.wrap($el).should("not.be.disabled");
+    });
+
+    cy.get(".social .icon-container").each(($el) => {
+      cy.wrap($el).should("be.visible");
+      cy.wrap($el).should("not.be.disabled");
+    });
+  }
+
+  // Scrolls down to the bottom of the page
+  scrollDown() {
+    cy.scrollTo("bottomRight");
+    cy.wait(2000);
   }
 }
 export default HomePagePowerUs; // makes your Homepage class accessible to all other pages

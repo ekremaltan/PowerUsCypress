@@ -8,7 +8,7 @@ Feature: Blog salary information e2e Testing
         When user clicks on the Blog button
         Then all menu items are shown and clickable
         When user clicks on the Elektriker Gehalt option
-        Then elektriker gehalt header is shown
+        Then elektriker gehalt header is displayed
         And the url contains elektriker gehalt as an endpoint
         And Kostenlos Gehalt checken button is clickable
         And all Allgemeine Gehaltsübersicht links should be clickable
@@ -27,6 +27,16 @@ Feature: Blog salary information e2e Testing
         And all states are clickable
         And the Kostenlos Dein Gehalt sehen button is displayed
 
+    @Regression @Positive
+    Scenario: Blog menu Electrician option functionality
+        Given user is on the Home page
+        When user clicks on the Blog button
+        And user clicks on the Elektriker Gehalt option
+        Then elektriker gehalt header is displayed
+        When user scrolls down to the page
+        Then all the buttons at the bottom of the page should be clickable
+        When clicks on the Elektriker Gehalt link
+        Then the page should scroll up and elektriker gehalt header should be displayed
 
     @Regression @Negative
     Scenario: States dropdown functionality negative testing

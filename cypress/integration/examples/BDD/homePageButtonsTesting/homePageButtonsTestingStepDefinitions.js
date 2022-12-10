@@ -25,7 +25,7 @@ When("user clicks on the Elektriker Gehalt option", () => {
   homePage.getElectricianJobType().click();
 });
 
-Then("elektriker gehalt header is shown", () => {
+Then("elektriker gehalt header is displayed", () => {
   homePage.getElektrikerGehaltHeader().should("be.visible");
 });
 
@@ -41,6 +41,25 @@ And("Kostenlos Gehalt checken button is clickable", () => {
 And("all Allgemeine Gehaltsübersicht links should be clickable", () => {
   homePage.assertGehaltsübersichtLinks();
 });
+
+When("user scrolls down to the page", () => {
+  homePage.scrollDown();
+});
+
+Then("all the buttons at the bottom of the page should be clickable", () => {
+  homePage.assertLinksAtTheBottom();
+});
+
+And("clicks on the Elektriker Gehalt link", () => {
+  homePage.getElektrikerGehaltLink().click();
+});
+
+Then(
+  "the page should scroll up and elektriker gehalt header should be displayed",
+  () => {
+    cy.window().its("scrollY").should("equal", 0);
+  }
+);
 
 When("user click on the Kostenlos Gehalt checken button", () => {
   homePage.getKostenlosGehaltButton().click();
