@@ -16,8 +16,6 @@ var avgSalary;
 
 Given("user is on the phone number page", function () {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
   homePage.getMenuIcon().click();
   homePage.getBlogMenu().click();
   homePage.getElectricianJobType().click();
@@ -66,8 +64,6 @@ When(
 
 Given("user is on the result page", function () {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
   homePage.getMenuIcon().click();
   homePage.getBlogMenu().click();
   homePage.getElectricianJobType().click();

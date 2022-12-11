@@ -19,10 +19,6 @@ class HomePagePowerUs {
     );
   }
 
-  getCookies() {
-    return cy.get("#onetrust-accept-btn-handler");
-  }
-
   getKostenlosGehaltButton() {
     return cy.contains(" Kostenlos Gehalt checken");
   }

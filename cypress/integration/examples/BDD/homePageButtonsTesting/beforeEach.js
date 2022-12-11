@@ -5,7 +5,5 @@ beforeEach(function () {
     this.data = data; // used to make your data parameter global
   });
   cy.viewport("iphone-x");
-  cy.getCookies();
-  cy.clearCookies();
-  cy.getCookies();
+  cy.acceptCookies();
 });

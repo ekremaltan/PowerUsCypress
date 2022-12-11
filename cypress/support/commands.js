@@ -23,3 +23,12 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+/**
+ * Avoids cookies banner while setting the flag as true
+ */
+Cypress.Commands.add("acceptCookies", () => {
+  cy.clearCookies();
+  const cookieFlagName = "OptanonAlertBoxClosed";
+  cy.setCookie(cookieFlagName, "true");
+});

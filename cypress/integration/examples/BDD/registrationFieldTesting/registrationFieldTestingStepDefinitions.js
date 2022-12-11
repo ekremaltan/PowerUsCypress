@@ -15,8 +15,6 @@ const randomPassword = faker.internet.password(10);
 
 Given("user is on the registration page", function () {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
   homePage.getMenuIcon().click();
   homePage.getBlogMenu().click();
   homePage.getElectricianJobType().click();
@@ -106,8 +104,6 @@ Then("user should proceed to the phone number page", () => {
 
 Given("user is on the phone number page", function () {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
   homePage.getMenuIcon().click();
   homePage.getBlogMenu().click();
   homePage.getElectricianJobType().click();

@@ -8,8 +8,6 @@ const detailsPage = new DetailsPage();
 
 Given("user is on the Home page", () => {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
 });
 
 When("user clicks on the Blog button", () => {
@@ -119,8 +117,6 @@ And("the Kostenlos Dein Gehalt sehen button is displayed", () => {
 
 Given("user is on the state step page", function () {
   cy.visit(Cypress.env("baseURL"));
-  cy.wait(5000);
-  homePage.getCookies().click();
   homePage.getMenuIcon().click();
   homePage.getBlogMenu().click();
   homePage.getElectricianJobType().click();
