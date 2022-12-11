@@ -21,7 +21,7 @@ Then("all menu items are shown and clickable", () => {
   homePage.assertJobTypes();
 });
 
-When("user clicks on the Elektriker Gehalt option", () => {
+When("user clicks on the Elektriker Gehalt link", () => {
   homePage.getElectricianJobType().click();
 });
 

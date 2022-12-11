@@ -7,7 +7,7 @@ Feature: Blog salary information e2e Testing
         Given user is on the Home page
         When user clicks on the Blog button
         Then all menu items are shown and clickable
-        When user clicks on the Elektriker Gehalt option
+        When user clicks on the Elektriker Gehalt link
         Then elektriker gehalt header is displayed
         And the url contains elektriker gehalt as an endpoint
         And Kostenlos Gehalt checken button is clickable
