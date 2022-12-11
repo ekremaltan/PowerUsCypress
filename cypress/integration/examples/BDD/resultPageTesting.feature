@@ -1,4 +1,4 @@
-Feature: Blog E2E Testing
+Feature: Blog salary information e2e Testing
     Application Positive, Negative, Boundary Value Analysis Testing
 
     @Regression @Negative
