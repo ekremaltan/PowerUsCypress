@@ -28,10 +28,10 @@ Feature: Blog salary information e2e Testing
         And the Kostenlos Dein Gehalt sehen button is displayed
 
     @Regression @Positive
-    Scenario: Blog menu Electrician option functionality
+    Scenario: Elektriker Gehalt Page Bottom Links functionality
         Given user is on the Home page
         When user clicks on the Blog button
-        And user clicks on the Elektriker Gehalt option
+        And user clicks on the Elektriker Gehalt link
         Then elektriker gehalt header is displayed
         When user scrolls down to the page
         Then all the buttons at the bottom of the page should be clickable
