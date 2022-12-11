@@ -13,10 +13,10 @@ Feature: Blog salary information e2e Testing
         When user enters invalid first name "<first_name>"
         Then user should not proceed to the Phone page
         Examples:
-            | first_name                                |
-            | 1111                                      |
-            | &&&&                                      |
-            | &&&&aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
+            | first_name                                                  |
+            | 987331                                                      |
+            | **/+++-                                                     |
+            | +&%+/dskladasklgnlkgndsljgnlsnksdlflsakfapo6546646545645679 |
 
     @Regression @Negative
     Scenario Outline: Registration input fields functionality testing with invalid last name
@@ -24,10 +24,10 @@ Feature: Blog salary information e2e Testing
         When user enters invalid last name "<last_name>"
         Then user should not proceed to the Phone page
         Examples:
-            | last_name                                 |
-            | 1111                                      |
-            | &&&&                                      |
-            | &&&&aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa |
+            | last_name                                                   |
+            | 6896                                                        |
+            | %&/=                                                        |
+            | &??'!hjfdlşskgfsdofdsşfdgjsddsjlfsdfkndls796431314641237898 |
 
 
     @Regression @Negative
@@ -36,12 +36,12 @@ Feature: Blog salary information e2e Testing
         When user enters invalid password "<password>"
         Then user should not proceed to the Phone page
         Examples:
-            | password                                      |
-            | 1                                             |
-            | 123456                                        |
-            | 123456789123456789123456789123456789123456789 |
-            | aaaaaaa                                       |
-            | %%%%%%%                                       |
+            | password                                             |
+            | 1                                                    |
+            | 123456                                               |
+            | 123465461dsashndsndalsda&+^&^%&+^??+-.+,%+^**+^%6456 |
+            | aaaaaaa                                              |
+            | %%%%%%%                                              |
 
 
     @Regression @Negative
