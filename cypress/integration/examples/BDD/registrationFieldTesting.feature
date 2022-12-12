@@ -17,7 +17,7 @@ Feature: Blog salary information e2e Testing
             | 987331                                                      |
             | **/+++-                                                     |
             | +&%+/dskladasklgnlkgndsljgnlsnksdlflsakfapo6546646545645679 |
-            #TODO: boş karakter dene
+
 
     @Regression @Negative
     Scenario Outline: Registration input fields functionality testing with invalid last name
@@ -29,7 +29,6 @@ Feature: Blog salary information e2e Testing
             | 6896                                                        |
             | %&/=                                                        |
             | &??'!hjfdlşskgfsdofdsşfdgjsddsjlfsdfkndls796431314641237898 |
-            #TODO: boş karakter dene
 
     @Regression @Negative
     Scenario Outline: Registration input fields functionality testing with invalid password

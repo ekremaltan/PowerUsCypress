@@ -3,7 +3,6 @@ import HomePagePowerUs from "../../../../support/pageObjects/HomePagePowerUs";
 import DetailsPage from "../../../../support/pageObjects/DetailsPage";
 
 const homePage = new HomePagePowerUs();
-
 const detailsPage = new DetailsPage();
 
 Given("user is on the Home page", () => {

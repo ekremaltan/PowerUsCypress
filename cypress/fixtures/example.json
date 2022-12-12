@@ -2,8 +2,13 @@
   "degree":"Techniker / Meister",
   "experience":"2-5 Jahre",
   "mobility":"Keine Reisen",
-  "state":"Hessen",
+  "state":"Baden-Württemberg",
   "newState":"Niedersachsen",
   "newExperience":"20+ Jahre",
-  "states": ["Baden-Württemberg", "Bayern", "Berlin","Brandenburg","Bremen","Hamburg","Hessen","Mecklenburg-Vorpommern","Niedersachsen","Nordrhein-Westfalen","Rheinland-Pfalz","Saarland","Sachsen","Sachsen-Anhalt","Schleswig-Holstein","Thüringen"]
+  "apiInvalidFirstName":"*//+++89889",
+  "apiInvalidLastName":"&%//%/%7956",
+  "apiInvalidEmail":"json@com",
+  "apiInvalidPassword":"1",
+  "apiInvalidPhoneNumber":"112",
+  "apiAlreadyRegisteredPhoneNumber":"987654"
 }

@@ -143,27 +143,6 @@ class DetailsPage {
     cy.contains("In welchem Bundesland wohnst Du?").should("be.visible");
   }
 
-  /*   // Accepts a state name argument and clicks on the required state
-  getAndClickOneState(stateName) {
-    stateName = stateName + "";
-    //data.states.forEach(($el, index) => {
-    //  if (String($el).includes(String(stateName))) {
-    //    cy.get("div[class='mat-form-field-infix ng-tns-c34-2']").click();
-    //    cy.get("#mat-option-'${index}'").click();
-    //  }
-    //});
-    cy.get("div[class='mat-form-field-infix ng-tns-c34-2']").click();
-    cy.get("#mat-option-2").click();
-    cy.get(".mat-option-text").each(function ($el, index) {
-      const eachState = $el.prop("innerText");
-      if (String(eachState).includes(String(stateName))) {
-        console.log("Inner Text is : " + eachState);
-        cy.get("div[class='mat-form-field-infix ng-tns-c34-2']").click();
-        cy.wrap($el).click({ force: true });
-      }
-    });
-  } */
-
   // On the registration form, checks each error message is displayed or not
   assertEachErforderlichError() {
     cy.get(".error").each(($el) => {
@@ -171,7 +150,6 @@ class DetailsPage {
       if ($el.text() === "  Erforderlich ") {
         console.log(true);
       }
-      //expect(eachErrorMessage).equals().to(" Erforderlich ");
     });
   }
 
@@ -218,7 +196,6 @@ class DetailsPage {
 
   // Accepts a degree level as an argument and clicks on the corresponding state
   selectDegree(degreeName) {
-    degreeName = degreeName + "";
     switch (degreeName) {
       case "Nein / Noch nicht anerkannt":
         this.getNichtAnerkanntButton().click();
@@ -237,7 +214,6 @@ class DetailsPage {
 
   // Accepts an experience level as an argument and clicks on the corresponding experience
   selectExperience(experience) {
-    experience = experience + "";
     switch (experience) {
       case "0-2 Jahre":
         this.get_0_2_JahreButton().click();
@@ -259,7 +235,6 @@ class DetailsPage {
 
   // Accepts an experience level as an argument and clicks on the corresponding experience
   selectMobility(travel) {
-    travel = travel + "";
     switch (travel) {
       case "Keine Reisen":
         this.getKeineButton().click();
@@ -278,122 +253,8 @@ class DetailsPage {
 
   // Accepts a state option as an argument and clicks on the corresponding state
   selectState(city) {
-    city = city + "";
     cy.get("div[class='mat-form-field-infix ng-tns-c34-2']").click();
-    switch (city) {
-      case "BadenWürttemberg":
-        this.getBadenWürttemberg().click();
-        break;
-      case "Bayern":
-        this.getBayern().click();
-        break;
-      case "Berlin":
-        this.getBerlin().click();
-        break;
-      case "Brandenburg":
-        this.getBrandenburg().click();
-        break;
-      case "Bremen":
-        this.getBremen().click();
-        break;
-      case "Hamburg":
-        this.getHamburg().click();
-        break;
-      case "Hessen":
-        this.getHessen().click();
-        break;
-      case "Mecklenburg-Vorpommern":
-        this.getMecklenburgVorpommern().click();
-        break;
-      case "Niedersachsen":
-        this.getNiedersachsen().click();
-        break;
-      case "Nordrhein-Westfalen":
-        this.getNordrheinWestfalen().click();
-        break;
-      case "Rheinland-Pfalz":
-        this.getRheinlandPfalz().click();
-        break;
-      case "Saarland":
-        this.getSaarland().click();
-        break;
-      case "Sachsen":
-        this.getSachsen().click();
-        break;
-      case "Sachsen-Anhalt":
-        this.getSachsenAnhalt().click();
-        break;
-      case "Schleswig-Holstein":
-        this.getSchleswigHolstein().click();
-        break;
-      case "Thüringen":
-        this.getThüringen().click();
-        break;
-    }
-  }
-
-  getBadenWürttemberg() {
-    return cy.get("#mat-option-0");
-  }
-
-  getBayern() {
-    return cy.get("#mat-option-1");
-  }
-
-  getBerlin() {
-    return cy.get("#mat-option-2");
-  }
-
-  getBrandenburg() {
-    return cy.get("#mat-option-3");
-  }
-
-  getBremen() {
-    return cy.get("#mat-option-4");
-  }
-
-  getHamburg() {
-    return cy.get("#mat-option-5");
-  }
-
-  getHessen() {
-    return cy.get("#mat-option-6");
-  }
-
-  getMecklenburgVorpommern() {
-    return cy.get("#mat-option-7");
-  }
-
-  getNiedersachsen() {
-    return cy.get("#mat-option-8");
-  }
-
-  getNordrheinWestfalen() {
-    return cy.get("#mat-option-9");
-  }
-
-  getRheinlandPfalz() {
-    return cy.get("#mat-option-10");
-  }
-
-  getSaarland() {
-    return cy.get("#mat-option-11");
-  }
-
-  getSachsen() {
-    return cy.get("#mat-option-12");
-  }
-
-  getSachsenAnhalt() {
-    return cy.get("#mat-option-13");
-  }
-
-  getSchleswigHolstein() {
-    return cy.get("#mat-option-14");
-  }
-
-  getThüringen() {
-    return cy.get("#mat-option-15");
+    cy.get("mat-option[role='option']").filter(`:contains(${city})`).click();
   }
 }
 export default DetailsPage;
