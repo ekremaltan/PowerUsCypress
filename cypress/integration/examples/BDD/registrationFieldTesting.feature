@@ -36,12 +36,11 @@ Feature: Blog salary information e2e Testing
         When user enters invalid password "<password>"
         Then user should not proceed to the Phone page
         Examples:
-            | password                                             |
-            | 1                                                    |
-            | 123456                                               |
-            | 123465461dsashndsndalsda&+^&^%&+^??+-.+,%+^**+^%6456 |
-            | aaaaaaa                                              |
-            | %%%%%%%                                              |
+            | password |
+            | 1        |
+            | 123456   |
+            | aaaaaaa  |
+            | %%%%%%%  |
 
 
     @Regression @Negative
