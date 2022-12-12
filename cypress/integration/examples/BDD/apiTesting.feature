@@ -25,7 +25,6 @@ Feature: Blog salary information e2e API Testing
         Then error messages appears on the body of the response with a status code of 400
 
 
-
     @Regression @Positive
     Scenario: Register POST API Testing
         When valid credentials are sent as a request body
