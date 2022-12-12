@@ -1,3 +1,13 @@
+import DetailsPage from "./DetailsPage";
+import { faker } from "@faker-js/faker";
+const detailsPage = new DetailsPage();
+var data = require("../../fixtures/example.json");
+const randomFirstName = faker.name.firstName();
+const randomLastName = faker.name.lastName();
+var randomEmailAddress = faker.internet.email();
+const randomPhoneNumber = faker.phone.number("50345####");
+const randomPassword = faker.internet.password(10);
+
 class HomePagePowerUs {
   getBlogMenu() {
     return cy
@@ -66,5 +76,42 @@ class HomePagePowerUs {
     cy.scrollTo("bottomRight");
     cy.wait(2000);
   }
+
+  // Accepts arguments for the degree, experience and mobility options and automatically gets until the state step page is appeared
+  getStateStepPage(degree, experience, mobility) {
+    cy.visit(Cypress.env("baseURL"));
+    this.getMenuIcon().click();
+    this.getBlogMenu().click();
+    this.getElectricianJobType().click();
+    this.getKostenlosGehaltButton().click();
+    detailsPage.selectDegree(String(degree));
+    detailsPage.selectExperience(String(experience));
+    detailsPage.selectMobility(String(mobility));
+  }
+
+  // Accepts arguments for the degree, experience, mobility, and state options and automatically gets until the registration step page is appeared
+  getRegistrationPage(degree, experience, mobility, state) {
+    this.getStateStepPage(degree, experience, mobility);
+    detailsPage.selectState(String(state));
+    detailsPage.getKostenlosDeinGehaltButton().click();
+  }
+
+  // Accepts arguments for the degree, experience, mobility, and state options, and automatically gets until the phone number step page is appeared
+  getPhoneNumberPage(degree, experience, mobility, state) {
+    this.getRegistrationPage(degree, experience, mobility, state);
+    detailsPage.fillOutRegistrationForm(
+      randomFirstName,
+      randomLastName,
+      randomEmailAddress,
+      randomPassword
+    );
+  }
+
+  // Accepts arguments for the degree, experience, mobility, and state options, and automatically gets until the result step page is appeared
+  getResultPage(degree, experience, mobility, state) {
+    this.getPhoneNumberPage(degree, experience, mobility, state);
+    detailsPage.getPhoneNumberInput(randomPhoneNumber);
+    detailsPage.getKostenlosRegistrierenButton().click();
+  }
 }
-export default HomePagePowerUs; // makes your Homepage class accessible to all other pages
+export default HomePagePowerUs;

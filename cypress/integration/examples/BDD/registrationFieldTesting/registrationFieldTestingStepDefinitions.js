@@ -1,4 +1,5 @@
 import { Given, When, And, Then } from "cypress-cucumber-preprocessor/steps";
+import { faker } from "@faker-js/faker";
 import HomePagePowerUs from "../../../../support/pageObjects/HomePagePowerUs";
 import DetailsPage from "../../../../support/pageObjects/DetailsPage";
 import ResultsPage from "../../../../support/pageObjects/ResultsPage";
@@ -6,7 +7,96 @@ import ResultsPage from "../../../../support/pageObjects/ResultsPage";
 const homePage = new HomePagePowerUs();
 const resultPage = new ResultsPage();
 const detailsPage = new DetailsPage();
-var avgSalary;
+const randomFirstName = faker.name.firstName();
+const randomLastName = faker.name.lastName();
+var randomEmailAddress = faker.internet.email();
+const randomPhoneNumber = faker.phone.number("50345####");
+const randomPassword = faker.internet.password(10);
+
+Given("user is on the registration page", function () {
+  homePage.getRegistrationPage(
+    this.data.degree,
+    this.data.experience,
+    this.data.mobility,
+    this.data.state
+  );
+});
+
+When("user enters no credentials and clicks on the weiter button", () => {
+  detailsPage.getWeiterButton().click();
+});
+
+Then("user receives Erforderlich warning message for each input field", () => {
+  detailsPage.assertEachErforderlichError();
+});
+
+When(/^user enters invalid first name "([^"]*)"$/, function (first_name) {
+  var invalidFirstName = first_name + "";
+  detailsPage.fillOutRegistrationForm(
+    invalidFirstName,
+    randomFirstName,
+    randomEmailAddress,
+    randomPassword
+  );
+});
+Then("user should not proceed to the Phone page", () => {
+  cy.wait(3000);
+  cy.url().should("include", "registeration-form");
+});
+
+When(/^user enters invalid last name "([^"]*)"$/, function (last_name) {
+  var invalidLastName = last_name + "";
+  detailsPage.fillOutRegistrationForm(
+    randomFirstName,
+    invalidLastName,
+    randomEmailAddress,
+    randomPassword
+  );
+});
+
+When(/^user enters invalid password "([^"]*)"$/, function (password) {
+  var invalidPassword = password + "";
+  detailsPage.fillOutRegistrationForm(
+    randomFirstName,
+    randomLastName,
+    randomEmailAddress,
+    invalidPassword
+  );
+});
+
+When(/^user enters invalid email "([^"]*)"$/, function (email) {
+  var invalidEmail = email + "";
+  detailsPage.fillOutRegistrationForm(
+    randomFirstName,
+    randomLastName,
+    invalidEmail,
+    randomPassword
+  );
+});
+
+When("user enters credentials on password input field", () => {
+  detailsPage.getPasswordInput().type(randomPassword);
+});
+
+Then("the password is shown in bullet points", () => {
+  detailsPage.getPasswordInput().should("have.attr", "type", "password");
+});
+
+When(
+  "user enters valid first_name, last_name, password, and email and clicks on the Weiter button",
+  () => {
+    detailsPage.fillOutRegistrationForm(
+      randomFirstName,
+      randomLastName,
+      randomEmailAddress,
+      randomPassword
+    );
+  }
+);
+
+Then("user should proceed to the phone number page", () => {
+  cy.url().should("include", "phone-number");
+});
 
 Given("user is on the phone number page", function () {
   homePage.getPhoneNumberPage(
@@ -17,106 +107,18 @@ Given("user is on the phone number page", function () {
   );
 });
 
-Then("an invalid phone number error message is displayed", () => {
-  detailsPage.assertInvalidPhoneNumber();
+When("user enters valid phone number in the input field", () => {
+  detailsPage.getPhoneNumberInput(randomPhoneNumber);
 });
 
-Then("user should not proceed to the next page", () => {
-  cy.url().should("include", "phone-number");
+Then("user cannot change Germany Country code", () => {
+  detailsPage.assertCountryCodeDimmed();
 });
 
 When("user clicks on the Kostenlos registrieren button", () => {
   detailsPage.getKostenlosRegistrierenButton().click({ force: true });
 });
 
-Then("an already registered phone number error message is displayed", () => {
-  detailsPage.assertAlreadyRegisteredPhoneNumber();
-});
-
-When(/^user enters invalid phone number "([^"]*)"$/, function (phoneNumber) {
-  var invalidPhoneNumber = phoneNumber + "";
-  detailsPage.getPhoneNumberInput(invalidPhoneNumber);
-});
-
-When(
-  /^user enters a phone_number that is already registered before "([^"]*)"$/,
-  function (phoneNumber) {
-    var invalidPhoneNumber = phoneNumber + "";
-    detailsPage.getPhoneNumberInput(invalidPhoneNumber);
-  }
-);
-
-Given("user is on the result page", function () {
-  homePage.getResultPage(
-    this.data.degree,
-    this.data.experience,
-    this.data.mobility,
-    this.data.state
-  );
-});
-
-Then("the average salary is displayed", () => {
-  avgSalary = resultPage.getAverageSalary().should("be.visible");
-});
-
-When("user clicks on the filter button", () => {
-  resultPage.getFilter().click({ force: true });
-});
-
-Then("the degree is displayed and matches with the selected one", function () {
-  const actualText = resultPage.getDegreeText(String(this.data.degree));
-  resultPage.getDegreeOnFilter().should("have.text", actualText);
-});
-
-And(
-  "the experience is displayed and matches with the selected one",
-  function () {
-    resultPage
-      .getExperienceOnFilter()
-      .should("have.text", String(this.data.experience));
-  }
-);
-
-And("the mobility is displayed and matches with the selected one", function () {
-  const actualText = resultPage.getMobilityText(String(this.data.mobility));
-  resultPage.getMobilityOnFilter().should("have.text", actualText);
-});
-
-And("the state is displayed and matches with the selected one", function () {
-  resultPage.getCityOnFilter().should("have.text", String(this.data.state));
-});
-
-When("user changes the years of experience", function () {
-  const newExperience = this.data.newExperience;
-  resultPage.reSelectExperience(String(newExperience));
-});
-
-And("user changes the state", function () {
-  const newState = this.data.newState;
-  resultPage.reSelectState(String(newState));
-});
-
-And("clicks on the Kostenlos Dein Gehalt sehen button", function () {
-  resultPage.getKostenlosDeinGehaltSehen().click();
-});
-
-Then("the average salary amount is changed", function () {
-  expect(avgSalary).not.to.equal(resultPage.getAverageSalary());
-});
-
-And("the new selected state is displayed", function () {
-  const newState = "Bundesland " + this.data.newState + "*";
-  resultPage.getDisplayedState().should("have.text", newState);
-});
-
-Then("the years of experience is updated on the filter section", function () {
-  resultPage
-    .getRenewedExperienceOnFilter()
-    .should("have.text", String(this.data.newExperience));
-});
-
-And("the state is updated on the filter section", function () {
-  resultPage
-    .getRenewedCityOnFilter()
-    .should("have.text", String(this.data.newState));
+Then("the Ergebnis header is displayed", () => {
+  resultPage.getErgebnisHeader().should("not.be.disabled").and("be.visible");
 });

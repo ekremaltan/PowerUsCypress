@@ -1,5 +1,4 @@
 import { Given, When, And, Then } from "cypress-cucumber-preprocessor/steps";
-import { faker } from "@faker-js/faker";
 import HomePagePowerUs from "../../../../support/pageObjects/HomePagePowerUs";
 import DetailsPage from "../../../../support/pageObjects/DetailsPage";
 import ResultsPage from "../../../../support/pageObjects/ResultsPage";
@@ -7,29 +6,14 @@ import ResultsPage from "../../../../support/pageObjects/ResultsPage";
 const homePage = new HomePagePowerUs();
 const resultPage = new ResultsPage();
 const detailsPage = new DetailsPage();
-const randomFirstName = faker.name.firstName();
-const randomLastName = faker.name.lastName();
-var randomEmailAddress = faker.internet.email();
-const randomPhoneNumber = faker.phone.number("50345####");
-const randomPassword = faker.internet.password(10);
 var avgSalary;
 
 Given("user is on the phone number page", function () {
-  cy.visit(Cypress.env("baseURL"));
-  homePage.getMenuIcon().click();
-  homePage.getBlogMenu().click();
-  homePage.getElectricianJobType().click();
-  homePage.getKostenlosGehaltButton().click();
-  detailsPage.selectDegree(String(this.data.degree));
-  detailsPage.selectExperience(String(this.data.experience));
-  detailsPage.selectMobility(String(this.data.mobility));
-  detailsPage.selectState(String(this.data.state));
-  detailsPage.getKostenlosDeinGehaltButton().click();
-  detailsPage.fillOutRegistrationForm(
-    randomFirstName,
-    randomLastName,
-    randomEmailAddress,
-    randomPassword
+  homePage.getPhoneNumberPage(
+    this.data.degree,
+    this.data.experience,
+    this.data.mobility,
+    this.data.state
   );
 });
 
@@ -63,24 +47,12 @@ When(
 );
 
 Given("user is on the result page", function () {
-  cy.visit(Cypress.env("baseURL"));
-  homePage.getMenuIcon().click();
-  homePage.getBlogMenu().click();
-  homePage.getElectricianJobType().click();
-  homePage.getKostenlosGehaltButton().click();
-  detailsPage.selectDegree(String(this.data.degree));
-  detailsPage.selectExperience(String(this.data.experience));
-  detailsPage.selectMobility(String(this.data.mobility));
-  detailsPage.selectState(String(this.data.state));
-  detailsPage.getKostenlosDeinGehaltButton().click();
-  detailsPage.fillOutRegistrationForm(
-    randomFirstName,
-    randomLastName,
-    randomEmailAddress,
-    randomPassword
+  homePage.getResultPage(
+    this.data.degree,
+    this.data.experience,
+    this.data.mobility,
+    this.data.state
   );
-  detailsPage.getPhoneNumberInput(randomPhoneNumber);
-  detailsPage.getKostenlosRegistrierenButton().click();
 });
 
 Then("the average salary is displayed", () => {
