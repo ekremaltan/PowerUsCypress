@@ -1,260 +1,117 @@
+import DetailsPage from "./DetailsPage";
+import { faker } from "@faker-js/faker";
+const detailsPage = new DetailsPage();
 var data = require("../../fixtures/example.json");
+const randomFirstName = faker.name.firstName();
+const randomLastName = faker.name.lastName();
+var randomEmailAddress = faker.internet.email();
+const randomPhoneNumber = faker.phone.number("50345####");
+const randomPassword = faker.internet.password(10);
 
-class DetailsPage {
-  getAbgeschlosseneButton() {
-    return cy.contains("Abgeschlossene Berufsausbildung");
+class HomePagePowerUs {
+  getBlogMenu() {
+    return cy
+      .get("button[class='mat-focus-indicator btn mat-button mat-button-base']")
+      .eq(1);
   }
 
-  getAktuellButton() {
-    return cy.contains("Aktuell in der Ausbildung");
-  }
-
-  getNichtAnerkanntButton() {
-    return cy.contains("Nein / Noch nicht anerkannt");
-  }
-
-  getTeknikerButton() {
-    return cy.contains("Techniker / Meister");
-  }
-
-  getProgressBar() {
-    return cy.get("app-progress-bar");
-  }
-
-  get2_5_JahreButton() {
-    return cy.contains(" 2-5 Jahre ");
-  }
-
-  get5_10_JahreButton() {
-    return cy.contains(" 5-10 Jahre ");
-  }
-
-  get_0_2_JahreButton() {
-    return cy.contains(" 0-2 Jahre ");
-  }
-
-  get_10_20_JahreButton() {
-    return cy.contains(" 10-20 Jahre ");
-  }
-
-  get_20_More_JahreButton() {
-    return cy.contains(" 20+ Jahre ");
-  }
-
-  getKeineButton() {
-    return cy.contains("Keine Reisen");
-  }
-
-  getWenigButton() {
-    return cy.contains("Wenig");
-  }
-
-  getHäufigButton() {
-    return cy.contains("Häufig");
-  }
-
-  getUneingeschränktButton() {
-    return cy.contains("Uneingeschränkt");
-  }
-
-  getErforderlichWarning() {
-    return cy.get(".error");
-  }
-
-  getKostenlosDeinGehaltButton() {
-    return cy.contains(" Kostenlos Dein Gehalt sehen ");
-  }
-
-  getFirstNameInput() {
-    return cy.get("#mat-input-2");
-  }
-
-  getLastNameInput() {
-    return cy.get("#mat-input-3");
-  }
-
-  getEmailInput() {
-    return cy.get("#mat-input-4");
-  }
-
-  getPasswordInput() {
-    return cy.get("#mat-input-5");
-  }
-
-  getWeiterButton() {
-    return cy.get(".registration-form > .mat-focus-indicator");
-  }
-
-  getPhoneNumberInput(phoneNumber) {
-    return cy.get("#mat-input-1").clear().type(phoneNumber);
-  }
-
-  getKostenlosRegistrierenButton() {
+  getElectricianJobType() {
     return cy
       .get(
-        ".mat-focus-indicator.btn.cta-register.mat-flat-button.mat-button-base.mat-primary"
+        "a[class='mat-focus-indicator menu-item mat-button mat-button-base']"
       )
-      .wait(2000);
+      .contains(" Elektriker Gehalt Übersicht ");
   }
 
-  // Under "Was ist Dein höchster Abschluss?" question, checks whether each degree option is visible or not
-  assertDegreeTypes() {
-    cy.get("div[class='cards'] div[class='icon-wrapper']").each(
-      ($el, index) => {
-        while (index <= 4) {
-          cy.wrap($el).should("not.be.disabled");
-          index++;
-        }
-      }
+  getMenuIcon() {
+    return cy.get(
+      "button[class='mat-focus-indicator mat-icon-button mat-button-base']"
     );
   }
 
-  // Under "Wie hoch ist Deine Reisebereitschaft?" question, checks whether each mobility option is clickable and visible or not
-  assertMobilityTypes() {
-    cy.get("div[class='cards'] div[class='icon-wrapper']").each(
-      ($el, index) => {
-        while (index > 4 && index <= 8) {
-          cy.wrap($el).should("be.visible");
-          cy.wrap($el).should("not.be.disabled");
-          index++;
-        }
-      }
-    );
+  getKostenlosGehaltButton() {
+    return cy.contains(" Kostenlos Gehalt checken");
   }
 
-  // Under "Wie viele Jahre Berufserfahrung hast Du?" question, checks whether each experience option is clickable and visible or not
-  assertExperienceTypes() {
-    cy.get(".chip.clickable.ng-star-inserted").each(($el) => {
+  getElektrikerGehaltHeader() {
+    return cy.get("h1[class='title']");
+  }
+
+  getElektrikerGehaltLink() {
+    return cy.get("a[routerlink='/elektriker-gehalt-übersicht']");
+  }
+
+  // Under blog menu, checks each job type buttons are displayed and clickable or not
+  assertJobTypes() {
+    cy.get(
+      "a[class='mat-focus-indicator menu-item mat-button mat-button-base']"
+    ).each(($el) => {
+      cy.wrap($el).should("be.visible").and("not.be.disabled");
+    });
+  }
+
+  // Under Allgemeine Gehaltsübersicht header, checks whether each link is displayed and clickable
+  assertGehaltsübersichtLinks() {
+    cy.get("[class='nav-link']").each(($el) => {
       cy.wrap($el).should("be.visible");
       cy.wrap($el).should("not.be.disabled");
     });
   }
 
-  // Under "In welchem Bundesland wohnst Du?" question, checks whether each state option is clickable and visible or not
-  assertAllStatesOptions() {
-    cy.get("[class='mat-form-field-infix ng-tns-c34-2']").click();
-    cy.get(".mat-option-text").each(($el) => {
+  // Asserts all the links at the bottom of the page whether each link is displayed and clickable
+  assertLinksAtTheBottom() {
+    cy.get(".links .link").each(($el) => {
+      cy.wrap($el).should("be.visible");
+      cy.wrap($el).should("not.be.disabled");
+    });
+
+    cy.get(".social .icon-container").each(($el) => {
+      cy.wrap($el).should("be.visible");
       cy.wrap($el).should("not.be.disabled");
     });
   }
 
-  // On the state selection, asserts that the header is visible
-  assertStateHeader() {
-    cy.contains("In welchem Bundesland wohnst Du?").should("be.visible");
-  }
-
-  // On the registration form, checks each error message is displayed or not
-  assertEachErforderlichError() {
-    cy.get(".error").each(($el) => {
-      cy.wrap($el).should("be.visible");
-      if ($el.text() === "  Erforderlich ") {
-        console.log(true);
-      }
-    });
-  }
-
-  // On the phone number section, checks whether the system provides a warning message if you try to enter a phone number that's already registered before
-  assertAlreadyRegisteredPhoneNumber() {
-    cy.get(".error").should("be.visible");
-    cy.get(".error").then(function (each) {
-      var errorMessage = each.text();
-      expect(errorMessage).to.equals(" Telefonnummer wird bereits verwendet. ");
-    });
-  }
-
-  // Asserts that the user cannot change the country code
-  assertCountryCodeDimmed() {
-    cy.get(".mat-form-field-infix.ng-tns-c34-0").then(function (element) {
-      const result = element.prop("isContentEditable");
-      expect(result).to.equals(result);
-    });
-  }
-
-  // Assert that the user gets a warning message when s/he enters invalid phone number
-  assertInvalidPhoneNumber() {
-    cy.get(".error").should("be.visible");
-    cy.get(".error").then(function (each) {
-      var errorMessage = each.text();
-      expect(errorMessage).to.equal(" Ungültige Telefonnummer. ");
-    });
-  }
-
-  // Returns the percentage of the link progress bar
-  getLinkBarPercentage(percentage) {
-    this.getProgressBar().invoke("attr", "style").should("contain", percentage);
-  }
-
-  // Accepts four different arguments and fills out the registration form accordingly
-  fillOutRegistrationForm(firstName, lastName, email, password) {
-    this.getFirstNameInput().clear().type(String(firstName));
-    this.getLastNameInput().clear().type(String(lastName));
-    this.getEmailInput().clear().type(String(email));
-    this.getPasswordInput().clear().type(String(password));
+  // Scrolls down to the bottom of the page
+  scrollDown() {
+    cy.scrollTo("bottomRight");
     cy.wait(2000);
-    this.getWeiterButton().click({ force: true });
   }
 
-  // Accepts a degree level as an argument and clicks on the corresponding state
-  selectDegree(degreeName) {
-    switch (degreeName) {
-      case "Nein / Noch nicht anerkannt":
-        this.getNichtAnerkanntButton().click();
-        break;
-      case "Aktuell in der Ausbildung":
-        this.getAktuellButton().click();
-        break;
-      case "Abgeschlossene Berufsausbildung":
-        this.getAbgeschlosseneButton().click();
-        break;
-      case "Techniker / Meister":
-        this.getTeknikerButton().click();
-        break;
-    }
+  // Accepts arguments for the degree, experience and mobility options and automatically gets until the state step page is appeared
+  getStateStepPage(degree, experience, mobility) {
+    cy.visit(Cypress.env("baseURL"));
+    this.getMenuIcon().click();
+    this.getBlogMenu().click();
+    this.getElectricianJobType().click();
+    this.getKostenlosGehaltButton().click();
+    detailsPage.selectDegree(String(degree));
+    detailsPage.selectExperience(String(experience));
+    detailsPage.selectMobility(String(mobility));
   }
 
-  // Accepts an experience level as an argument and clicks on the corresponding experience
-  selectExperience(experience) {
-    switch (experience) {
-      case "0-2 Jahre":
-        this.get_0_2_JahreButton().click();
-        break;
-      case "2-5 Jahre":
-        this.get2_5_JahreButton().click();
-        break;
-      case "5-10 Jahre":
-        this.get5_10_JahreButton().click();
-        break;
-      case "10-20 Jahre":
-        this.get_10_20_JahreButton().click();
-        break;
-      case "20+ Jahre":
-        this.get_20_More_JahreButton().click();
-        break;
-    }
+  // Accepts arguments for the degree, experience, mobility, and state options and automatically gets until the registration step page is appeared
+  getRegistrationPage(degree, experience, mobility, state) {
+    this.getStateStepPage(degree, experience, mobility);
+    detailsPage.selectState(String(state));
+    detailsPage.getKostenlosDeinGehaltButton().click();
   }
 
-  // Accepts an experience level as an argument and clicks on the corresponding experience
-  selectMobility(travel) {
-    switch (travel) {
-      case "Keine Reisen":
-        this.getKeineButton().click();
-        break;
-      case "Wenig":
-        this.getWenigButton().click();
-        break;
-      case "Häufig":
-        this.getHäufigButton.click();
-        break;
-      case "Uneingeschränkt":
-        this.getUneingeschränktButton.click();
-        break;
-    }
+  // Accepts arguments for the degree, experience, mobility, and state options, and automatically gets until the phone number step page is appeared
+  getPhoneNumberPage(degree, experience, mobility, state) {
+    this.getRegistrationPage(degree, experience, mobility, state);
+    detailsPage.fillOutRegistrationForm(
+      randomFirstName,
+      randomLastName,
+      randomEmailAddress,
+      randomPassword
+    );
   }
 
-  // Accepts a state option as an argument and clicks on the corresponding state
-  selectState(city) {
-    cy.get("div[class='mat-form-field-infix ng-tns-c34-2']").click();
-    cy.get("mat-option[role='option']").filter(`:contains(${city})`).click();
+  // Accepts arguments for the degree, experience, mobility, and state options, and automatically gets until the result step page is appeared
+  getResultPage(degree, experience, mobility, state) {
+    this.getPhoneNumberPage(degree, experience, mobility, state);
+    detailsPage.getPhoneNumberInput(randomPhoneNumber);
+    detailsPage.getKostenlosRegistrierenButton().click();
   }
 }
-export default DetailsPage;
+export default HomePagePowerUs;

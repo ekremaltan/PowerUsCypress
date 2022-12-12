@@ -115,14 +115,11 @@ And("the Kostenlos Dein Gehalt sehen button is displayed", () => {
 });
 
 Given("user is on the state step page", function () {
-  cy.visit(Cypress.env("baseURL"));
-  homePage.getMenuIcon().click();
-  homePage.getBlogMenu().click();
-  homePage.getElectricianJobType().click();
-  homePage.getKostenlosGehaltButton().click();
-  detailsPage.selectDegree(String(this.data.degree));
-  detailsPage.selectExperience(String(this.data.experience));
-  detailsPage.selectMobility(String(this.data.mobility));
+  homePage.getStateStepPage(
+    this.data.degree,
+    this.data.experience,
+    this.data.mobility
+  );
 });
 
 When(
