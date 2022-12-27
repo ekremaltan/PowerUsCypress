@@ -126,7 +126,7 @@ When("valid credentials are sent as a request body", () => {
   );
 });
 
-Then("the status code should be 200", () => {
+Then("the status code should be 201", () => {
   req.should((response) => {
     expect(response.body.accountId).exist;
     expect(response.status).to.be.eq(201);

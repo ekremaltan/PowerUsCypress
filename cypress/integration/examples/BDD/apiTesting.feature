@@ -28,4 +28,4 @@ Feature: Blog salary information e2e API Testing
     @Regression @Positive
     Scenario: Register POST API Testing
         When valid credentials are sent as a request body
-        Then the status code should be 200
+        Then the status code should be 201
