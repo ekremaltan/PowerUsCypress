@@ -56,7 +56,10 @@ Given("user is on the result page", function () {
 });
 
 Then("the average salary is displayed", () => {
-  avgSalary = resultPage.getAverageSalary().should("be.visible");
+  const avgSalaryElement = resultPage.getAverageSalary().should("be.visible");
+  avgSalaryElement.then(($el) => {
+    avgSalary = $el.text();
+  });
 });
 
 When("user clicks on the filter button", () => {
@@ -101,7 +104,10 @@ And("clicks on the Kostenlos Dein Gehalt sehen button", function () {
 });
 
 Then("the average salary amount is changed", function () {
-  expect(avgSalary).not.to.equal(resultPage.getAverageSalary());
+  const revisedSalaryElement = resultPage.getAverageSalary();
+  revisedSalaryElement.then(($el) => {
+    expect(avgSalary).not.to.equal($el.text());
+  });
 });
 
 And("the new selected state is displayed", function () {
