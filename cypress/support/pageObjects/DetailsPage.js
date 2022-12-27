@@ -166,7 +166,7 @@ class DetailsPage {
   assertCountryCodeDimmed() {
     cy.get(".mat-form-field-infix.ng-tns-c34-0").then(function (element) {
       const result = element.prop("isContentEditable");
-      expect(result).to.equals(result);
+      expect(result).to.equals(false);
     });
   }
 
